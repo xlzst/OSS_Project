@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import Restaurants from "../components/Restaurants";
+import Courses from "../components/Courses";
 
 function MainPage () {
     return (
         <MainWrapper>
-            <Restaurants />
+            <Courses />
         </MainWrapper>
     );
 }
