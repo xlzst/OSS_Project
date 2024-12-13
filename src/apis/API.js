@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const server = process.env.REACT_APP_RESTAURANT_URL;
-const key = process.env.REACT_APP_API_KEY;
+const server = 'https://apis.data.go.kr/B552881/kmooc_v2_0';
+const key = 'dE7ZbJ+ijzNdsmgmIk7L+C1S5NA3RAKada/Fo2g8a4WVbr7q2Us/2L7V7uvzMXsnWzaRgl1YJ6onzyqnDxeJaQ==';
 
-export const getKoreanMenuAPI = async () => {
+export const getCourseList = async () => {
     try {
-        const res = await axios.get(`${server}/api/menu/korean?serviceKey=${key}`);
+        const res = await axios.get(`${server}/courseList_v2_0?serviceKey=${key}`);
         if (res.data?.body) {
             return res.data.body;
         }
@@ -14,20 +14,9 @@ export const getKoreanMenuAPI = async () => {
     }
 };
 
-export const getRestaurantsAPI = async () => {
+export const getCourseDetail = async () => {
     try {
-        const res = await axios.get(`${server}/api/rstr?serviceKey=${key}`);
-        if (res.data?.body) {
-            return res.data.body;
-        }
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-export const getRestaurantImgAPI = async () => {
-    try {
-        const res = await axios.get(`${server}/api/rstr/img?serviceKey=${key}`);
+        const res = await axios.get(`${server}/courseDetail_v2_0?serviceKey=${key}`);
         if (res.data?.body) {
             return res.data.body;
         }

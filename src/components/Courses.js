@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getRestaurantsAPI, getRestaurantImgAPI } from "../apis/API";
+import { getCourseList, getCourseDetail } from "../apis/API";
 
 function Courses () {
     const navigate = useNavigate();
-    const [restaurants, setRestaurants] = useState([]);
-    const [restaurantImages, setRestaurantImages] = useState([]);
+    const [courses, setCourses] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(""); // 업종 필터 상태
 
     const getCourses = async () => {
         try {
-            const res = await getRestaurantsAPI();
+            const res = await getCourseList();
             // console.log(res);
-            setRestaurants(res);
+            setCourses(res);
         } catch (err) {
             console.error(err);
         }
@@ -22,10 +21,6 @@ function Courses () {
     useEffect(() => {
         getCourses();
     }, []);
-
-    const handleCardClick = (id) => {
-        navigate(`/detail/${id}`);
-    }
 
     return (
         <Div>
