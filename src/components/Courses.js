@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { getCourseList, getCourseDetail } from "../apis/API";
 
 function Courses () {
@@ -23,14 +22,11 @@ function Courses () {
     }, []);
 
     return (
-        <Div>
-            <RestWrapper>
-                {filteredRestaurants.map((restaurant) => (
-                    <CourseCard key={restaurant.RSTR_ID} onClick={() => handleCardClick(restaurant.RSTR_ID)}>
-                    </CourseCard>
-                ))}
-            </RestWrapper>
-        </Div>
+        <div>
+            <div>
+                <p>Checking Error</p>
+            </div>
+        </div>
     );
 }
 
