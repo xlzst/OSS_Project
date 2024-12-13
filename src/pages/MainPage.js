@@ -10,6 +10,8 @@ const MainPage = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어
   const [filteredCourses, setFilteredCourses] = useState([]); // 필터링된 데이터
   const [filter, setFilter] = useState("all"); // 필터 타입
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+  const itemsPerPage = 30; // 페이지당 항목 수
   const navigate = useNavigate();
   
 
@@ -21,7 +23,7 @@ const MainPage = () => {
     const xhr = new XMLHttpRequest();
     const url = "http://apis.data.go.kr/B552881/kmooc_v2_0/courseList_v2_0";
     const key = "Sl7VyA9lMCV9eyR8NoauVEgi9ZlK68K2gQU5H4vRdsIP%2BClSh%2FqTR0fMxgxzx7k7FIY%2Bc17ZXAciJMrpILejew%3D%3D";
-    const size = "100";
+    const size = "500";
     const queryParams =
       "?" + encodeURIComponent("serviceKey") + "=" + key + "&Size=" + size;
 
@@ -57,9 +59,10 @@ const MainPage = () => {
     fetchData();
   }, []);
 
+
   useEffect(() => {
     if (filter === "all") {
-      setFilteredCourses(courses); // 전체 데이터를 표시
+      setFilteredCourses(courses);
     } else {
       setFilteredCourses(
         courses.filter((course) =>
@@ -67,11 +70,18 @@ const MainPage = () => {
         )
       );
     }
+    setCurrentPage(1); // 필터 변경 시 첫 페이지로 이동
   }, [filter, courses]);
 
   const handleSearch = () => {
     navigate("/search", { state: { searchType, searchTerm, courses } });
   };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredCourses.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
+
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-danger">{error}</div>;
@@ -79,10 +89,7 @@ const MainPage = () => {
   return (
     <div className="container mt-5">
     <h2 className="page-title">Courses List</h2>
-
-      {/* 필터 및 검색창 */}
-      <div className="toolbar">
-        {/* 필터 */}
+    <div className="toolbar">
         <div className="filter-bar">
           <select
             value={filter}
@@ -97,7 +104,6 @@ const MainPage = () => {
           </select>
         </div>
 
-        {/* 검색 */}
         <div className="search-bar">
           <select
             value={searchType}
@@ -122,7 +128,7 @@ const MainPage = () => {
 
       {/* 강의 목록 */}
       <div className="courses-grid">
-        {filteredCourses.map((course, index) => (
+        {currentItems.map((course, index) => (
           <div className="course-card" key={index}>
             <img
               src={course.course_image}
@@ -149,6 +155,28 @@ const MainPage = () => {
           </div>
         ))}
       </div>
+
+{/* 페이지네이션 */}
+<div className="pagination">
+<button
+    className="pagination-button"
+    onClick={() => { setCurrentPage((prev) => {
+        const newPage = Math.max(prev - 1, 1);
+        if (newPage !== prev) window.scrollTo({ top: 0, behavior: "smooth" });
+        return newPage;});
+    }}
+    disabled={currentPage === 1}> Previous </button>
+    <span className="pagination-info">
+    {currentPage} of {totalPages}</span>
+    <button
+    className="pagination-button"
+    onClick={() => setCurrentPage((prev) => {
+        const newPage = Math.min(prev + 1, totalPages);
+        if (newPage !== prev) window.scrollTo({ top: 0, behavior: "smooth" });
+        return newPage;})}
+    disabled={currentPage === totalPages}> Next </button>
+</div>
+
     </div>
 );
 };
