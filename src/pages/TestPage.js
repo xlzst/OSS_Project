@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const TestJSON = () => {
-  const [jsonData, setJsonData] = useState(null); // Store parsed JSON data
+  const [courses, setCourses] = useState([]); // Store parsed JSON data
   const [error, setError] = useState(null); // Store error messages
   const [loading, setLoading] = useState(false); // Loading state
 
@@ -23,8 +23,8 @@ const TestJSON = () => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           try {
-            const responseJSON = JSON.parse(xhr.responseText); // Parse JSON data
-            setJsonData(responseJSON); // Store parsed JSON data
+            const responseJSON = JSON.parse(xhr.responseText); // JSON 데이터를 파싱
+            setCourses(responseJSON.items || []);
           } catch (e) {
             setError("Failed to parse JSON response.");
           }
@@ -53,17 +53,28 @@ const TestJSON = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="page-title">JSON Data</h2>
-      <pre
-        style={{
-          backgroundColor: "#f4f4f4",
-          padding: "10px",
-          borderRadius: "5px",
-          overflowX: "auto",
-        }}
-      >
-        {jsonData ? JSON.stringify(jsonData, null, 2) : "No Data Available"}
-      </pre>
+      <h2 className="page-title">Courses</h2>
+      {courses.length > 0 ? (
+        <ul>
+          {courses.map((course, index) => (
+            <li key={index} style={{ marginBottom: "20px" }}>
+              <h3>{course.name}</h3>
+              <img
+                src={course.course_image}
+                alt={course.name}
+                style={{ maxWidth: "200px", marginBottom: "10px" }}
+              />
+              <p><strong>Professor:</strong> {course.professor}</p>
+              <p><strong>Enrollment Period:</strong> {new Date(course.enrollment_start * 1000).toLocaleDateString()} - {new Date(course.enrollment_end * 1000).toLocaleDateString()}</p>
+              <a href={course.url} target="_blank" rel="noopener noreferrer">
+                View Course
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No courses available.</p>
+      )}
     </div>
   );
 };
