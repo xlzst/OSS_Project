@@ -20,7 +20,7 @@ const TestPage = () => {
     // Initialize XMLHttpRequest
     const xhr = new XMLHttpRequest();
     const url = "http://apis.data.go.kr/B552881/kmooc_v2_0/courseList_v2_0";
-    const key = "Sl7VyA9lMCV9eyR8NoauVEgi9ZlK68K2gQU5H4vRdsIP%2BClSh%2FqTR0fMxgxzx7k7FIY%2Bc17ZXAciJMrpILejew%3D%3D";
+    const key = process.env.REACT_APP_API_KEY;
     const size = "100";
     const queryParams =
       "?" + encodeURIComponent("serviceKey") + "=" + key + "&Size=" + size;
