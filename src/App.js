@@ -3,6 +3,7 @@ import './App.css';
 import MainPage from './pages/MainPage';
 import Header from './components/Header';
 import TestPage from './pages/TestPage';
+import MyPage from './pages/MyPage';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/test" element={<TestPage />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </div>
   );
