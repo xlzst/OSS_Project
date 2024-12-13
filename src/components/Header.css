@@ -1,0 +1,48 @@
+/* 전체 네비게이션 바 스타일 */
+.navbar {
+  background-color: #343a40; /* 어두운 배경 */
+  padding: 1rem; /* 내부 여백 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 하단 그림자 */
+}
+
+/* 브랜드 스타일 */
+.navbar-brand {
+  font-size: 2rem; /* 큰 글씨 */
+  font-weight: bold; /* 굵은 텍스트 */
+  color: #ffffff; /* 흰색 글씨 */
+  text-decoration: none; /* 밑줄 제거 */
+  transition: color 0.3s ease; /* 색상 변경 효과 */
+}
+
+.navbar-brand:hover {
+  color: #007bff; /* 호버 시 파란색 */
+}
+
+/* 링크 스타일 */
+.nav-link {
+  font-size: 1rem; /* 기본 크기 */
+  color: #989898; /* 흰색 텍스트 */
+  text-decoration: none; /* 밑줄 제거 */
+  margin-left: 20px; /* 좌측 여백 */
+  transition: color 0.3s ease; /* 색상 변경 효과 */
+}
+
+.nav-link:hover {
+  color: #007bff; /* 호버 시 파란색 */
+}
+
+/* 모바일 화면을 위한 반응형 */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap; /* 네비게이션 바가 줄 바꿈되도록 */
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem; /* 작은 화면에서 브랜드 크기 줄이기 */
+  }
+
+  .nav-link {
+    margin-left: 0; /* 링크 간 여백 제거 */
+    margin-top: 10px; /* 세로 여백 추가 */
+  }
+}
