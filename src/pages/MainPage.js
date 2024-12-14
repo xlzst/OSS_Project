@@ -82,6 +82,7 @@ const handleAddWish = async (courses) => {
     try {
         const method = 'POST';
         const url = `https://675ae1579ce247eb1934ea3d.mockapi.io/course/course`;
+        addDynamicKey(courses, "memo", "");
         await fetch(url, {
           method,
           headers: { 'Content-Type': 'application/json' },
@@ -91,6 +92,10 @@ const handleAddWish = async (courses) => {
         console.error('Error saving Courses:', error);
       }
   };
+
+const addDynamicKey = (obj, key, value) => {
+    obj[key] = value; // Add the new key-value pair
+};
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
