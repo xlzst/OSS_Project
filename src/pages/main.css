@@ -49,7 +49,8 @@
 }
 
 .course-professor,
-.course-dates {
+.course-dates,
+.course-enrollment {
   font-size: 0.9em;
   margin: 5px 0;
   color: #555;
