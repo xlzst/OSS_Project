@@ -38,6 +38,7 @@ const MainPage = () => {
             setCourses(responseJSON.items || []);
           } catch (e) {
             setError("Failed to parse JSON response.");
+
           }
         } else {
           setError(`Failed to load data. Status code: ${xhr.status}`);
@@ -73,8 +74,22 @@ const MainPage = () => {
     setCurrentPage(1); // 필터 변경 시 첫 페이지로 이동
   }, [filter, courses]);
 
-  const handleSearch = () => {
-    navigate("/search", { state: { searchType, searchTerm, courses } });
+const handleSearch = () => {
+navigate("/search", { state: { searchType, searchTerm, courses } });
+};
+
+const handleAddWish = async (courses) => {
+    try {
+        const method = 'POST';
+        const url = `https://675ae1579ce247eb1934ea3d.mockapi.io/course/course`;
+        await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(courses),
+        });
+      } catch (error) {
+        console.error('Error saving Courses:', error);
+      }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -150,7 +165,9 @@ const MainPage = () => {
               >
                 Course Page
               </a>
-              <button className="add-wish">Add To WishList</button>
+              <button onClick={() => handleAddWish(course)} className="add-wish">
+                Add To WishList
+                </button>
             </div>
           </div>
         ))}

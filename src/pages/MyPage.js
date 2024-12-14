@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./main.css"; // 스타일 파일
 
 const MyPage = () => {
   const [mycourses, setMyCourses] = useState([]); // Store parsed JSON data
+  const [searchType, setSearchType] = useState("name"); // 검색 유형 (name or professor)
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어
+  const [filteredCourses, setFilteredCourses] = useState([]); // 필터링된 데이터
+  const [filter, setFilter] = useState("all"); // 필터 타입
+  const navigate = useNavigate();
 
   const fetchMyCourses = async () => {
     try {
@@ -13,12 +20,10 @@ const MyPage = () => {
     }
   };
 
- const handleAddOrEdit = async (mycourse) => {
+ const handleEdit = async (mycourse) => {
     try {
-      const method = mycourse.id ? 'PUT' : 'POST';
-      const url = mycourse.id
-        ? `https://675ae1579ce247eb1934ea3d.mockapi.io/course/course/${mycourse.id}`
-        : 'https://675ae1579ce247eb1934ea3d.mockapi.io/course/course';
+      const method = 'PUT';
+      const url = `https://675ae1579ce247eb1934ea3d.mockapi.io/course/course/${mycourse.id}`;
       await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
@@ -43,34 +48,98 @@ useEffect(() => {
     fetchMyCourses();
   }, []);
 
-  return (
+useEffect(() => {
+if (filter === "all") {
+    setFilteredCourses(mycourses); // 전체 데이터를 표시
+} else {
+    setFilteredCourses(
+    mycourses.filter((course) =>
+        course.name.toLowerCase().includes(filter.toLowerCase())
+    )
+    );
+}
+}, [filter, mycourses]);
+
+const handleSearch = () => {
+navigate("/search", { state: { searchType, searchTerm, mycourses } });
+};
+
+return (
     <div className="container mt-5">
-      <h2 className="page-title">Courses</h2>
-      {mycourses.length > 0 ? (
-        <ul>
-          {mycourses.map((course, index) => (
-            <li key={index} style={{ marginBottom: "20px" }}>
-              <h3>{course.name}</h3>
-              <img
-                src={course.course_image}
-                alt={course.name}
-                style={{ maxWidth: "200px", marginBottom: "10px" }}
-              />
-              <p><strong>Professor:</strong> {course.professor}</p>
-              <p><strong>Enrollment Period:</strong> {new Date(course.enrollment_start * 1000).toLocaleDateString()} - {new Date(course.enrollment_end * 1000).toLocaleDateString()}</p>
-              <a href={course.url} target="_blank" rel="noopener noreferrer">
-                View Course
+    <h2 className="page-title">Courses Wishist</h2>
+
+      {/* 필터 및 검색창 */}
+      <div className="toolbar">
+        {/* 필터 */}
+        <div className="filter-bar">
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="filter-select"
+          >
+            <option value="all">전체</option>
+            <option value="(수어)">수어</option>
+            <option value="(mooc)">mooc</option>
+            <option value="(더빙)">더빙</option>
+            <option value="(방송)">방송</option>
+          </select>
+        </div>
+
+        {/* 검색 */}
+        <div className="search-bar">
+          <select
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+            className="search-select"
+          >
+            <option value="name">Search by Title</option>
+            <option value="professor">Search by Professor</option>
+          </select>
+          <input
+            type="text"
+            placeholder="Enter your search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={handleSearch} className="search-button">
+            Search
+          </button>
+        </div>
+      </div>
+
+      {/* 강의 목록 */}
+      <div className="courses-grid">
+        {filteredCourses.map((course, index) => (
+          <div className="course-card" key={index}>
+            <img
+              src={course.course_image}
+              alt={course.name}
+              className="course-image"
+            />
+            <div className="course-details">
+              <h2 className="course-title">{course.name}</h2>
+              <p className="course-professor">
+                <strong>Professor:</strong> {course.professor}
+              </p>
+            </div>
+            <div className="course-actions">
+              <a
+                href={course.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="course-link"
+              >
+                Course Page
               </a>
-              <button onClick={() => handleDelete(course.id)}>Delete</button>
-              <button onClick={() => handleAddOrEdit(course)}>Edit</button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No courses were found.</p>
-      )}
+              <button onClick={() => handleEdit(course)} className="edit">Edit</button>
+              <button onClick={() => handleDelete(course.id)} className="delete">Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-  )
+);
 
 }
 

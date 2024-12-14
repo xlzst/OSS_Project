@@ -173,3 +173,39 @@
   font-size: 1.2rem;
   color: #333;
 }
+
+.edit {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #007bff;
+  border: 2px solid #007bff; /* 파란색 테두리 */
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+}
+
+.edit:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.delete {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color:#dc3545;
+  border: 2px solid #dc3545; /* 파란색 테두리 */
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+}
+
+.delete:hover {
+  background-color: #bb2d3b;
+  border-color: #bb2d3b;
+}
