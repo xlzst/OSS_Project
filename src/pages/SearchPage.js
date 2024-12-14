@@ -42,6 +42,11 @@ const SearchPage = () => {
                   <p className="course-professor">
                     <strong>Professor:</strong> {course.professor}
                   </p>
+                  <p className="course-enrollment">
+                <strong>Enrollment Period:</strong>{" "}
+                {new Date(course.enrollment_start * 1000).toLocaleDateString()}{" "}
+                  - {new Date(course.enrollment_end * 1000).toLocaleDateString()}
+              </p>
                 </div>
                 <div className="course-actions">
                   <a
