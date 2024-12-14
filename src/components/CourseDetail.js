@@ -12,9 +12,9 @@ const CourseDetail = () => {
   const getCourseApi =
     "https://apis.data.go.kr/B552881/kmooc_v2_0/courseDetail_v2_0"; // API URL
 
-  useEffect(() => {
+  useEffect(() => { 
     fetchCourseDetail();
-  }, [id]);
+  }, [id]);                             //for Detail
 
   const fetchCourseDetail = async () => {
     setLoading(true);
