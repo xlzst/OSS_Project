@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./main.css"; // 스타일 파일
 
 const SearchPage = () => {
   const location = useLocation();
   const { searchType, searchTerm, courses } = location.state;
+  const navigate = useNavigate();
 
   // 필터링된 결과
   const filteredCourses = courses.filter((course) =>
@@ -36,6 +38,7 @@ const SearchPage = () => {
                   src={course.course_image}
                   alt={course.name}
                   className="course-image"
+                  onClick={() => navigate(`/detail/${course.id}`)}
                 />
                 <div className="course-details">
                   <h3 className="course-title">{course.name}</h3>
