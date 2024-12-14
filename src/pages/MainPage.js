@@ -21,7 +21,7 @@ const MainPage = () => {
 
     // Initialize XMLHttpRequest
     const xhr = new XMLHttpRequest();
-    const url = "http://apis.data.go.kr/B552881/kmooc_v2_0/courseList_v2_0";
+    const url = "https://apis.data.go.kr/B552881/kmooc_v2_0/courseList_v2_0";
     const key = process.env.REACT_APP_API_KEY;
     const size = "500";
     const queryParams =
