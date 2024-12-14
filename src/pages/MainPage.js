@@ -78,24 +78,41 @@ const handleSearch = () => {
 navigate("/search", { state: { searchType, searchTerm, courses } });
 };
 
-const handleAddWish = async (courses) => {
+const handleAddWish = async (course) => {
     try {
-        const method = 'POST';
-        const url = `https://675ae1579ce247eb1934ea3d.mockapi.io/course/course`;
-        addDynamicKey(courses, "memo", "");
-        await fetch(url, {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(courses),
-        });
-      } catch (error) {
-        console.error('Error saving Courses:', error);
+      const method = 'POST';
+      const url = `https://675ae1579ce247eb1934ea3d.mockapi.io/course/course`;
+      
+      // Step 1: Fetch the current wishlist to check for duplicates
+      const wishlistResponse = await fetch(url, { method: 'GET' });
+      const wishlist = await wishlistResponse.json();
+  
+      // Step 2: Check if the course is already in the wishlist
+      const isAlreadyInWishlist = wishlist.some((item) => item.name === course.name);
+  
+      if (isAlreadyInWishlist) {
+        alert("This course is already in your wishlist.");
+        return; // Stop further execution if duplicate is found
       }
+  
+      // Step 3: Add the `memo` dynamically and proceed with adding the course
+      addDynamicKey(course, "memo", ""); // Add the memo key with an empty value
+      await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(course),
+      });
+  
+      alert("Course was added to wishlist.");
+    } catch (error) {
+      console.error('Error saving Courses:', error);
+    }
   };
-
-const addDynamicKey = (obj, key, value) => {
-    obj[key] = value; // Add the new key-value pair
-};
+  
+  const addDynamicKey = (obj, key, value) => {
+    obj[key] = value;
+  };
+  
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -160,6 +177,9 @@ const addDynamicKey = (obj, key, value) => {
               <h2 className="course-title">{course.name}</h2>
               <p className="course-professor">
                 <strong>Professor:</strong> {course.professor}
+              </p>
+              <p className="course-organization">
+                <strong>Organization:</strong> {course.org_name}
               </p>
               <p className="course-enrollment">
                 <strong>Enrollment Period:</strong>{" "}

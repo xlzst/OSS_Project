@@ -40,14 +40,16 @@ const MyPage = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await fetch(
-        `https://675ae1579ce247eb1934ea3d.mockapi.io/course/course/${id}`,
-        { method: "DELETE" }
-      );
-      fetchMyCourses();
-    } catch (error) {
-      console.error("Error deleting course:", error);
+    if (window.confirm("Are you sure you want to delete this course?")) {
+      try {
+        await fetch(
+          `https://675ae1579ce247eb1934ea3d.mockapi.io/course/course/${id}`,
+          { method: "DELETE" }
+        );
+        fetchMyCourses();
+      } catch (error) {
+        console.error("Error deleting course:", error);
+      }
     }
   };
 
@@ -72,6 +74,14 @@ const MyPage = () => {
               <h2 className="course-title">{course.name}</h2>
               <p className="course-professor">
                 <strong>Professor:</strong> {course.professor}
+              </p>
+              <p className="course-organization">
+                <strong>Organization:</strong> {course.org_name}
+              </p>
+              <p className="course-enrollment">
+                <strong>Enrollment Period:</strong>{" "}
+                {new Date(course.enrollment_start * 1000).toLocaleDateString()}{" "}
+                  - {new Date(course.enrollment_end * 1000).toLocaleDateString()}
               </p>
               <p className="course-memo">
                 <strong>Memo : </strong> 
