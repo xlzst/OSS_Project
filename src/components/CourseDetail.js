@@ -1,33 +1,25 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import "./CourseDetail.css";
 
 const CourseDetail = () => {
-  const [course, setCourse] = useState(null); // Course 데이터를 저장
-  const [error, setError] = useState(null); // 에러 메시지
-  const [loading, setLoading] = useState(true); // 로딩 상태
-  const { id } = useParams(); // URL에서 Course ID 가져오기
-
+  const [course, setCourse] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
   const getCourseApi =
-    "https://apis.data.go.kr/B552881/kmooc_v2_0/courseDetail_v2_0"; // API URL
+    "https://apis.data.go.kr/B552881/kmooc_v2_0/courseDetail_v2_0";
 
-  useEffect(() => { 
-    console.log("Course ID:", id);
-    fetchCourseDetail();
-  }, [id]);                             //for Detail
-
-  const fetchCourseDetail = async () => {
+  const fetchCourseDetail = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const fullUrl = `${getCourseApi}?serviceKey=${process.env.REACT_APP_API_KEY}&CourseId=${id}`;
       console.log("API URL:", fullUrl);
-  
       const response = await axios.get(fullUrl);
-  
       console.log("API Response:", response.data);
-  
+
       const courseDetail = response.data.results;
       if (courseDetail) {
         setCourse(courseDetail);
@@ -40,7 +32,11 @@ const CourseDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, getCourseApi]);
+
+  useEffect(() => {
+    fetchCourseDetail();
+  }, [fetchCourseDetail]);
 
   if (loading) return <div className="course-detail-loading">Loading...</div>;
   if (error) return <div className="course-detail-error-message">{error}</div>;
