@@ -13,6 +13,7 @@ const CourseDetail = () => {
     "https://apis.data.go.kr/B552881/kmooc_v2_0/courseDetail_v2_0"; // API URL
 
   useEffect(() => { 
+    console.log("Course ID:", id);
     fetchCourseDetail();
   }, [id]);                             //for Detail
 
