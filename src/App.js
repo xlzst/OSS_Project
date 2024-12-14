@@ -5,6 +5,7 @@ import Header from './components/Header';
 import TestPage from './pages/TestPage';
 import MyPage from './pages/MyPage';
 import SearchPage from './pages/SearchPage';
+import CourseDetail from './components/CourseDetail';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/test" element={<TestPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/detail/:id" element={<CourseDetail />} />
       </Routes>
     </div>
   );

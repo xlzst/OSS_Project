@@ -1,0 +1,150 @@
+/* CourseDetail 전용 클래스 */
+.course-detail-container {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 20px;
+}
+
+/* Page title */
+.course-detail-page-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color:#292929;
+}
+
+/* Loading and error messages */
+.course-detail-loading,
+.course-detail-error-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 20px;
+}
+
+/* No details message */
+.course-detail-no-details-message {
+  font-size: 1.5rem;
+  color: #555;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Course detail content */
+.course-detail-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color:#292929;
+}
+
+/* Image styling */
+.course-detail-image {
+  width: 300px;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Information styling */
+.course-detail-info {
+  text-align: left;
+  width: 100%;
+}
+
+.course-detail-info p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Description styling */
+.course-detail-description {
+  margin-top: 20px;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.course-detail-parsed-description ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+/* Link styling */
+.course-detail-link {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: white;
+  color: #292929;
+  text-decoration:underline;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.course-detail-link:hover {
+  background-color: #c0ff04;
+}
+
+.course-detail-parsed-description {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.course-detail-parsed-description h6 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.course-detail-parsed-description ul {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.course-detail-parsed-description ul li {
+  margin-bottom: 5px;
+}
+
+.course-detail-parsed-description table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.course-detail-parsed-description table td,
+.course-detail-parsed-description table th {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.course-detail-parsed-description table th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+.course-detail-parsed-description img,
+.course-detail-parsed-description video {
+  max-width: 100%; /* 부모 컨테이너 너비에 맞게 조정 */
+  height: auto; /* 비율 유지 */
+  display: block; /* 이미지와 비디오가 블록 요소로 처리 */
+  margin: 10px auto; /* 중앙 정렬 */
+  border-radius: 8px; /* 부드러운 모서리 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+}
+
+/* iframe 스타일 (유튜브 등) */
+.course-detail-parsed-description iframe {
+  width: 100%; /* 부모 너비에 맞게 조정 */
+  height: 300px; /* 고정 높이, 필요에 따라 조정 가능 */
+  border: none; /* 불필요한 테두리 제거 */
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+}

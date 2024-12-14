@@ -154,6 +154,7 @@ const addDynamicKey = (obj, key, value) => {
               src={course.course_image}
               alt={course.name}
               className="course-image"
+              onClick={() => navigate(`/detail/${course.id}`)}
             />
             <div className="course-details">
               <h2 className="course-title">{course.name}</h2>
